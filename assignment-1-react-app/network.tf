@@ -18,10 +18,10 @@ resource "aws_internet_gateway" "gw-01" {
 
 # Public Subnet 1: AZ1, hosts internet-facing resources like ALB or NAT-1
 resource "aws_subnet" "public_subnet1" {
-  vpc_id            = aws_vpc.vpc-01.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "eu-west-2a"
-
+  vpc_id                  = aws_vpc.vpc-01.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "eu-west-2a"
+  map_public_ip_on_launch = true
   tags = {
     Name = "public-01"
   }
@@ -29,10 +29,10 @@ resource "aws_subnet" "public_subnet1" {
 
 # Private Subnet 1: AZ1, hosts EC2 instances for the app behind NAT
 resource "aws_subnet" "private_subnet1" {
-  vpc_id            = aws_vpc.vpc-01.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "eu-west-2a"
-
+  vpc_id                  = aws_vpc.vpc-01.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "eu-west-2a"
+  map_public_ip_on_launch = false
   tags = {
     Name = "private-01"
   }
@@ -40,10 +40,10 @@ resource "aws_subnet" "private_subnet1" {
 
 # Public Subnet 2: AZ2, hosts internet-facing resources like ALB or NAT-2
 resource "aws_subnet" "public_subnet2" {
-  vpc_id            = aws_vpc.vpc-01.id
-  cidr_block        = "10.0.3.0/24"
-  availability_zone = "eu-west-2b"
-
+  vpc_id                  = aws_vpc.vpc-01.id
+  cidr_block              = "10.0.3.0/24"
+  availability_zone       = "eu-west-2b"
+  map_public_ip_on_launch = true
   tags = {
     Name = "public-02"
   }
@@ -51,10 +51,10 @@ resource "aws_subnet" "public_subnet2" {
 
 # Private Subnet 2: AZ2, hosts EC2 instances for the app behind NAT
 resource "aws_subnet" "private_subnet2" {
-  vpc_id            = aws_vpc.vpc-01.id
-  cidr_block        = "10.0.4.0/24"
-  availability_zone = "eu-west-2b"
-
+  vpc_id                  = aws_vpc.vpc-01.id
+  cidr_block              = "10.0.4.0/24"
+  availability_zone       = "eu-west-2b"
+  map_public_ip_on_launch = false
   tags = {
     Name = "private-02"
   }
@@ -84,4 +84,19 @@ resource "aws_nat_gateway" "nat-2" {
 
   # Ensure NAT is created after the Internet Gateway exists
   depends_on = [aws_internet_gateway.gw-01]
+}
+# Elastic IP for NAT Gateway 1
+resource "aws_eip" "nat-1" {
+
+  tags = {
+    Name = "nat-eip-1"
+  }
+}
+
+# Elastic IP for NAT Gateway 2
+resource "aws_eip" "nat-2" {
+
+  tags = {
+    Name = "nat-eip-2"
+  }
 }

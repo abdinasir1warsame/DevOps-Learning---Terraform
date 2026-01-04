@@ -33,8 +33,8 @@ resource "aws_route_table" "private-rt-01" {
 
   # IPv4 default route to NAT Gateway 1
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-1.id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat-1.id
   }
 
   tags = {
@@ -48,8 +48,8 @@ resource "aws_route_table" "private-rt-02" {
 
   # IPv4 default route to NAT Gateway 2
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-2.id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat-2.id
   }
 
   tags = {
