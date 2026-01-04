@@ -1,3 +1,3 @@
-module "ec2" {
-  source = "./assignment-1-react-app"
+module "web_infra" {
+  source = "./terraform-aws-web-infrastructure"
 }

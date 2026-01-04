@@ -1,6 +1,6 @@
 # Application Load Balancer (ALB) deployed in public subnets with a security group
-resource "aws_lb" "react-app-lb" {
-  name                       = "react-app-lb"
+resource "aws_lb" "alb-01" {
+  name                       = "alb-01"
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.alb_sg.id]
@@ -12,8 +12,8 @@ resource "aws_lb" "react-app-lb" {
   }
 }
 
-resource "aws_lb_listener" "react-app" {
-  load_balancer_arn = aws_lb.react-app-lb.arn
+resource "aws_lb_listener" "alb-listener" {
+  load_balancer_arn = aws_lb.alb-01.arn
   port              = 80
   protocol          = "HTTP"
 
@@ -45,13 +45,13 @@ resource "aws_lb_target_group" "target_group" {
 # Attach EC2 instance 1 to the target group
 resource "aws_lb_target_group_attachment" "instance1" {
   target_group_arn = aws_lb_target_group.target_group.arn
-  target_id        = aws_instance.react-app-1.id
+  target_id        = aws_instance.instance-01.id
   port             = 80
 }
 
 # Attach EC2 instance 2 to the target group
 resource "aws_lb_target_group_attachment" "instance2" {
   target_group_arn = aws_lb_target_group.target_group.arn
-  target_id        = aws_instance.react-app-2.id
+  target_id        = aws_instance.instance-02.id
   port             = 80
 }

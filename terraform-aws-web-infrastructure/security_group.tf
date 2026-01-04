@@ -1,5 +1,5 @@
-resource "aws_security_group" "react-app-sg" {
-  name   = "react-app-sg"
+resource "aws_security_group" "instance-sg" {
+  name   = "instance-sg"
   vpc_id = aws_vpc.vpc-01.id
 
   ingress {
@@ -26,7 +26,7 @@ resource "aws_security_group" "react-app-sg" {
   }
 
   tags = {
-    Name = "react-app-sg"
+    Name = "instance-sg"
   }
 }
 
